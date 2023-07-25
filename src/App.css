@@ -16,6 +16,7 @@
   /* position: fixed; */
   z-index: 1;
   margin: 0px;
+  
 }
 
 .searchbar{
@@ -144,4 +145,20 @@ input {
   color: whitesmoke;
   margin-top: 20px;
   margin-left:15px
+}
+
+.about{
+  color: white;
+}
+
+.about>p{
+  width: 60%;
+}
+
+.contact{
+  color: #fff;
+}
+
+.header>h6{
+  text-decoration: none;
 }
