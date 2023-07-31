@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Title from './title';
 import MovieBox from './moviebox';
 import { Link } from 'react-router-dom';
+import fetch from 'node-fetch';
 
 function search(usertext, movieslist) {
   const searches = movieslist.filter((xyz) => xyz.title.toLowerCase().includes(usertext.toLowerCase()));

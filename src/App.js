@@ -1,7 +1,7 @@
 
 import Home from './component/home.jsx';
 import { useState, useRef, useEffect } from 'react';
-import myImage from './img/bgimage.jpg'
+// import myImage from './img/bgimage.jpg'
 
 
 
@@ -13,7 +13,7 @@ function App() {
 
   const [showHome, setShowHome] = useState(false);
   const [show, setShow] = useState(false);
-  const [movies, setMovies] = useState([]); // State to hold the fetched movie data
+  // const [movies, setMovies] = useState([]); // State to hold the fetched movie data
 
 
   
@@ -29,7 +29,7 @@ function App() {
     if (localStorage.getItem('email')) {
       setShow(true)
     }
-  })
+  },[])
 
   const handleClick = () => {
     if (name.current.value && email.current.value && password.current.value) {
