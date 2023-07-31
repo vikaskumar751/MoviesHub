@@ -1,112 +1,94 @@
-import './App.css';
-import Title from './component/title';
-import MovieBox from './component/moviebox.jsx';
-import movie from './movielist/movielist.json';
-import { useEffect, useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+
+import Home from './component/home.jsx';
+import { useState, useRef, useEffect } from 'react';
+import myImage from './img/bgimage.jpg'
+
+
+
 // import SignUp from './component/SignUp';
 
-function search(usertext, movieslist) {
-  const searches = movieslist.filter((xyz) => xyz.title.toLowerCase().includes(usertext.toLowerCase()));
-  return searches;
-}
+
 
 function App() {
-  const [beforefilter, setBeforefilter] = useState(movie);
-  const [text, setText] = useState('');
-  const [movies, setMovies] = useState(movie);
-  const [defaultValue, setDefaultValue] = useState('');
-  const [showHome,setShowHome] = useState(true);
- 
-  const name = useRef();
-       const email = useRef();
-       const password = useRef();
 
-       const handleClick=()=>{
-        if(name.current.value && email.current.value && password.current.value ){
-            setShowHome(false)
-            localStorage.setItem('name',name.current.value);
-            localStorage.setItem('email',email.current.value);
-            localStorage.setItem('password',password.current.value);
-            localStorage.setItem('signup',email.current.value)
-            alert('Congratulations! Account created')
-        }else{
-           alert('You missed something');
-           window.location.reload();
-        }
-        
-       }
+  const [showHome, setShowHome] = useState(false);
+  const [show, setShow] = useState(false);
+  const [movies, setMovies] = useState([]); // State to hold the fetched movie data
+
+
   
+
+  const name = useRef();
+  const email = useRef();
+  const password = useRef();
+
+  useEffect(() => {
+    if (localStorage.getItem('signup')) {
+      setShowHome(true)
+    };
+    if (localStorage.getItem('email')) {
+      setShow(true)
+    }
+  })
+
+  const handleClick = () => {
+    if (name.current.value && email.current.value && password.current.value) {
+      localStorage.setItem('name', name.current.value);
+      localStorage.setItem('email', email.current.value);
+      localStorage.setItem('password', password.current.value);
+      localStorage.setItem('signup', email.current.value);
+      alert('Congratulations! Account created');
+      window.location.reload();
+    } else {
+      alert('You missed something');
+      window.location.reload();
+    }
+
+  }
+
+  const handleLogin = () => {
+       if(password.current.value === localStorage.getItem('password') && email.current.value === localStorage.getItem('email') ){
+        localStorage.setItem('signup', email.current.value);
+        window.location.reload();
+       }
+       else{
+        alert("Please enter valid Email and Password.")
+        window.location.reload();
+       }
+  }
+
 
   return (
     <>
       {
-      showHome ? (
-        <div className="signup">
-        <input type="text" placeholder="Name" ref={name} />
-        <input type="email" placeholder="Email" ref={email} />
-        <input type="password" placeholder="Password" ref={password}/>
-        <button type="button" onClick={handleClick}>Get started</button>
-        </div>
-      ) : (
-        <>
-          <div className='header'>
-            <h1>MoviesHub</h1>
-            <Link to='/about'>
-              <h6>About us</h6>
-            </Link>
-            <Link to='/contact'>
-              <h6>Contact</h6>
-            </Link>
-            <div className='searchbar'>
-              <input
-                className='input'
-                type='text'
-                placeholder='search'
-                value={text}
-                onChange={(e) => {
-                  setText(e.target.value);
-                }}
-              />
-              <button
-                type='button'
-                onClick={() => {
-                  const data = search(text, beforefilter);
-                  setMovies(data);
-                  setDefaultValue(text);
-                }}
-              >
-                Enter
-              </button>
+        showHome ? <Home /> : show ? (
+          <div className="relative bg-[url('./img/bgimage.jpg')] bg-opacity-75 filter transition-all duration-500 flex justify-center items-center flex-col h-screen">
+            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-transparent to-black"></div>
+            <h1 className="z-10 text-4xl font-extrabold text-white text-center mb-10">Welcome to MoviesHub</h1>
+            <div className="z-10 rounded-lg shadow-lg p-8 w-80 border mb-6">
+            <h2 className='text-2xl font-semibold mb-4 text-center text-white'>Hi {localStorage.getItem('name')},</h2>
+            <input id="emailInput" className="transition-color duration-250 ease-in cubic-bezier(0.5, 0, 0.1, 1) w-full bg-transparent text-white line-height[1.5rem] py-2 px-4 border border-white rounded mb-4" type="email" placeholder="Email" ref={email} />
+            <input id="passwordInput" className="transition-color duration-250 ease-in cubic-bezier(0.5, 0, 0.1, 1) w-full bg-transparent text-white line-height[1.5rem] py-2 px-4 border border-white rounded mb-4" type="password" placeholder="Password" ref={password}/>
+
+            <button className='bg-red-700 text-fuchsia-50  hover:bg-blue-600 text-white  font-semibold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 mt-1' type="button" onClick={handleLogin}>Login</button>
             </div>
           </div>
-
-          {movies.length === 0 ? (
-            <h4 id='alt'>No results found for "{defaultValue}"</h4>
-          ) : (
-            <>
-              <Title />
-              <div className='item'>
-                {movies.map((element) => {
-                  return (
-                    <MovieBox
-                      key={element.id} // Add a unique 'key' prop for each movie
-                      title={element.title}
-                      year={element.year}
-                      poster={element.posterUrl}
-                      runtime={element.runtime}
-                      genre={element.genres}
-                      director={element.director}
-                      actor={element.actors}
-                      plot={element.plot}
-                    />
-                  );
-                })}
-              </div>
-            </>
-          )}
+        ) : (<>
+          <div className="relative bg-[url('./img/bgimage.jpg')] bg-opacity-75 filter transition-all duration-500 flex justify-center items-center flex-col h-screen">
+            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-transparent to-black"></div>
+            <h1 className="z-10 text-4xl font-extrabold text-white text-center mb-10">Welcome to MoviesHub</h1>
+            <div className="z-10 rounded-lg shadow-lg p-8 w-80 border mb-6">
+              <h2 className="text-3xl font-bold mb-4 text-center text-white">Sign Up</h2>
+              <input id="nameInput" className="transition-color duration-250 ease-in cubic-bezier(0.5, 0, 0.1, 1) w-full bg-transparent text-white line-height[1.5rem] py-2 px-4 border border-white rounded mb-4" type="text" placeholder="Name" ref={name}/>
+              <input id="emailInput" className="transition-color duration-250 ease-in cubic-bezier(0.5, 0, 0.1, 1) w-full bg-transparent text-white line-height[1.5rem] py-2 px-4 border border-white rounded mb-4" type="email" placeholder="Email" ref={email} />
+              <input id="passwordInput" className="transition-color duration-250 ease-in cubic-bezier(0.5, 0, 0.1, 1) w-full bg-transparent text-white line-height[1.5rem] py-2 px-4 border border-white rounded mb-4" type="password" placeholder="Password" ref={password}/>
+              <button className="bg-red-700 text-fuchsia-50 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 mt-1" type="button" onClick={handleClick}>Get started</button>
+            </div>
+          </div>
         </>
-      )}
+        
+        
+       )}
     </>
   );
 }

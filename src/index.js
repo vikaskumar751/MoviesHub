@@ -4,6 +4,8 @@ import App from './App';
 import About from './component/about';
 import Contact from './component/contact';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import './App.css';
+import { Home } from '@mui/icons-material';
 
 const routering = createBrowserRouter([
     {
