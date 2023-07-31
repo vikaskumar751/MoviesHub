@@ -66,7 +66,7 @@ function App() {
             <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-transparent to-black"></div>
             <h1 className="z-10 text-4xl font-extrabold text-white text-center mb-10">Welcome to MoviesHub</h1>
             <div className="z-10 rounded-lg shadow-lg p-8 w-80 border mb-6">
-            <h2 className='text-2xl font-semibold mb-4 text-center text-white'>Hi {localStorage.getItem('name')},</h2>
+            <h2 className='text-2xl font-semibold mb-4 text-center text-white'>Welcome back, {localStorage.getItem('name')}</h2>
             <input id="emailInput" className="transition-color duration-250 ease-in cubic-bezier(0.5, 0, 0.1, 1) w-full bg-transparent text-white line-height[1.5rem] py-2 px-4 border border-white rounded mb-4" type="email" placeholder="Email" ref={email} />
             <input id="passwordInput" className="transition-color duration-250 ease-in cubic-bezier(0.5, 0, 0.1, 1) w-full bg-transparent text-white line-height[1.5rem] py-2 px-4 border border-white rounded mb-4" type="password" placeholder="Password" ref={password}/>
 

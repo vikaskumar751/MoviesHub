@@ -12,6 +12,7 @@ const Home = () => {
   const [text, setText] = useState('');
   const [movies, setMovies] = useState([]); // Initialize movies state with an empty array
   const [defaultValue, setDefaultValue] = useState('');
+  const [beforeFilter,setBeforeFilter] = useState([])
 
   // Your RapidAPI endpoint and headers
   const fetch = require('node-fetch');
@@ -33,6 +34,7 @@ const options = {
         console.log(data);
         
         setMovies(data); // Save the fetched movie data in the state
+        setBeforeFilter(data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -73,9 +75,10 @@ const options = {
               className="ml-2 px-4 py-2 text-white bg-blue-600 rounded-lg focus:outline-none hover:bg-blue-500"
               type="button"
               onClick={() => {
-                const datas = search(text, movies); // Use the 'movies' state for filtering
+                const datas = search(text, beforeFilter); // Use the 'movies' state for filtering
                 setMovies(datas);
                 setDefaultValue(text);
+                setText(" ");
               }}
             >
               Search
